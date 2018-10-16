@@ -1,23 +1,29 @@
 using System.Collections.Generic;
+using System.Linq;
 using ForgeSample.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForgeSample.Controllers
 {
 
-[Route("api/[controller]")]
-public class ProductController: ControllerBase
+    [Route("api/[controller]")]
+    public class ProductController : ControllerBase
     {
         [HttpGet("all")]
-        public JsonResult GetProducts()
+        public IActionResult GetProducts()
         {
-            return new JsonResult(ProductService.Current.Products);
+            return Ok(ProductService.Current.Products);
         }
 
         [HttpGet("{id}")]
-        public JsonResult GetProduct(int id)
+        public IActionResult GetProduct(int id)
         {
-            return new JsonResult(ProductService.Current.Products.Find(p=>p.Id==id));
+            var product = ProductService.Current.Products.SingleOrDefault(x => x.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
         }
     }
 }
