@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ForgeSample.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace ForgeSample.Controllers
 {
@@ -10,6 +12,14 @@ namespace ForgeSample.Controllers
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
+        private ILogger<ProductController> _logger;
+
+        public ProductController(ILogger<ProductController> logger)
+        {
+            _logger = logger;
+        }
+        
+        
         [HttpGet("all")]
         public IActionResult GetProducts()
         {
@@ -19,12 +29,22 @@ namespace ForgeSample.Controllers
         [Route("{id}", Name = "GetProduct")]
         public IActionResult GetProduct(int id)
         {
-            var product = ProductService.Current.Products.SingleOrDefault(x => x.Id == id);
-            if (product == null)
+            try
             {
-                return NotFound();
+                throw new Exception("来个异常S!");
+                var product = ProductService.Current.Products.SingleOrDefault(x => x.Id == id);
+                if (product == null)
+                {
+                    _logger.LogInformation($"id为{id}的产品没找到!");
+                    return NotFound();
+                }
+                return Ok(product);
             }
-            return Ok(product);
+            catch(Exception ex)
+            {
+                _logger.LogCritical($"查找Id为{id}的产品时出现了错误",ex);
+                return StatusCode(500,"处理请求的时候发生了错误!");
+            }
         }
 
         [HttpPost]

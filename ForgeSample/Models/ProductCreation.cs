@@ -20,5 +20,6 @@ namespace ForgeSample.Models
         [Display(Name="描述")]
         [MaxLength(100,ErrorMessage="{0}的长度不能超过{1}")]
         public string Description{get;set;}
+        
     }
 }
