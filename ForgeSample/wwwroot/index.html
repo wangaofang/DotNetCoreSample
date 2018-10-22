@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no" />
+                <meta charset="utf-8">
+            
+                <!-- The Viewer CSS -->
+                <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css" type="text/css">
+                <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+            
+                <!-- Developer CSS -->
+                <style>
+                    body {
+                        margin: 0;
+                    }
+                    #MyViewerDiv {
+                        width: 100%;
+                        height: 100%;
+                        margin: 0;
+                        background-color: #F0F8FF;
+                    }                   
+                    
+                    #MyAwesomeLockButton{
+                        position:absolute;
+                        padding: 5px;
+                        left:10px;
+                        top:20px;
+                        z-index: 99;
+                    }
+
+                     #MyAwesomeUnlockButton{
+                        position:absolute;
+                        padding: 5px;
+                        left:80px;
+                        top:20px;
+                        z-index: 99;
+                    }
+
+                </style>
+            </head>
+            <body>
+            
+                <!-- The Viewer will be instantiated here -->
+                <div id="MyViewerDiv"></div>
+                <button id="MyAwesomeLockButton">Lock it!</button>
+                <button id="MyAwesomeUnlockButton">Unlock it!</button>
+            
+                <!-- The Viewer JS -->
+                <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js"></script>
+                <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js"></script>
+                <script src="my-awesome-extension.js"></script>
+            
+                <!-- Developer JS -->
+                <script src="main.js"></script>
+            </body>
+</html>
